@@ -1,14 +1,15 @@
-name: CI
+name: Release
 
 on:
-  pull_request:
-    branches: [main]
-
   push:
-    branches: [main]
+    branches:
+      - main
+
+permissions:
+  contents: write
 
 jobs:
-  test:
+  release:
     runs-on: ubuntu-latest
 
     steps:
@@ -19,13 +20,12 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: npm
+          registry-url: https://registry.npmjs.org
 
-      - name: Install
+      - name: Install dependencies
         run: npm install
 
-      - name: Lint
-        run: npm run lint
-
-      - name: Build
-        run: npm run build
+      - name: Create Release
+        uses: changesets/action@v1
+        with:
+          publish: npm run release
