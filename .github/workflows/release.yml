@@ -13,30 +13,20 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-      - uses: actions/setup-node@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
         with:
           node-version: 20
 
-      - run: npm ci
+      - name: Install dependencies
+        run: npm ci
 
-      # 1. calcula versões
-      - run: npx changeset version
+      - name: Run Semantic Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      # 2. build (opcional mas recomendado)
-      - run: npm run build
-
-      # 3. cria commit de release
-      - name: Commit version bump
-        run: |
-          git config user.name github-actions
-          git config user.email github-actions@github.com
-          git add .
-          git commit -m "chore: release" || exit 0
-          git push --follow-tags
-
-      # 4. cria tag + GitHub release
-      - run: npx changeset tag
+        run: npx semantic-release
