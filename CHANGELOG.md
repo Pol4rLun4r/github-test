@@ -1,3 +1,11 @@
+## [1.1.1](https://github.com/Pol4rLun4r/github-test/compare/v1.1.0...v1.1.1) (2026-05-24)
+
+
+### Bug Fixes
+
+* **auth:** prevent login crash on empty payload ([5fe3a3f](https://github.com/Pol4rLun4r/github-test/commit/5fe3a3fa51e8fbd2f7072ee82a1111811bbfcbc5))
+* text in main page ([bbc87f3](https://github.com/Pol4rLun4r/github-test/commit/bbc87f3fe430aa7004340a45daab8c24099a5572))
+
 # [1.1.0](https://github.com/Pol4rLun4r/github-test/compare/v1.0.0...v1.1.0) (2026-05-24)
 
 
