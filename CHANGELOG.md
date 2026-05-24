@@ -1,3 +1,10 @@
+## [1.2.3](https://github.com/Pol4rLun4r/github-test/compare/v1.2.2...v1.2.3) (2026-05-24)
+
+
+### Bug Fixes
+
+* build.yml ([43ccb58](https://github.com/Pol4rLun4r/github-test/commit/43ccb589756c40dee5c7c5a690c5405c66b2e24c))
+
 ## [1.2.2](https://github.com/Pol4rLun4r/github-test/compare/v1.2.1...v1.2.2) (2026-05-24)
 
 
