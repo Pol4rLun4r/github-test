@@ -1,3 +1,15 @@
+# [1.1.0](https://github.com/Pol4rLun4r/github-test/compare/v1.0.0...v1.1.0) (2026-05-24)
+
+
+### Bug Fixes
+
+* **ui:** ajuste no title da página princial ([5e9527b](https://github.com/Pol4rLun4r/github-test/commit/5e9527b0327a21952a6bea30306caa9b94f538bd))
+
+
+### Features
+
+* **electron:** add custom navbar button ([d6b1268](https://github.com/Pol4rLun4r/github-test/commit/d6b12680a08605e2db04ec359d8acc02cac3e27e))
+
 # 1.0.0 (2026-05-24)
 
 
