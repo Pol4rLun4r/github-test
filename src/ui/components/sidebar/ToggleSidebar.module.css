@@ -1,0 +1,37 @@
+.toggleSidebar {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    
+    /* &:hover {
+        .iconContainer, .label {
+            opacity: 0;
+        }
+    } */
+
+}
+
+.iconContainer {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.label {
+    /* text-transform: uppercase; */
+
+    position: absolute;
+    margin-left: 4rem;
+    white-space: nowrap;
+    overflow: hidden;
+
+    opacity: 1;
+    visibility: visible;
+
+    &[data-collapsed=true] {
+        opacity: 0;
+    }
+}

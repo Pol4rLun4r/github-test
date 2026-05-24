@@ -1,0 +1,13 @@
+.data {
+    padding: var(--mantine-spacing-md);
+}
+
+.form {
+    margin-top: var(--mantine-spacing-md);
+    padding: var(--mantine-spacing-md);
+}
+
+.notes {
+    padding: var(--mantine-spacing-sm);
+    background-color: var(--input-bg);
+}

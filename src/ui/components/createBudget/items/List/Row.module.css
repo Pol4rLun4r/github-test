@@ -1,0 +1,11 @@
+.row {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.rowContainer {
+    overflow: hidden;
+    vertical-align: middle;
+}

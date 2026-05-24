@@ -1,0 +1,14 @@
+.main {
+    padding: var(--mantine-spacing-lg);
+    width:  100%;
+    height: calc(100% - 2.5rem);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    overflow: hidden;
+
+    margin-left: 80px;
+    margin-top: 2.5rem;
+}
