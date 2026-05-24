@@ -10,6 +10,9 @@
     "preview": "vite preview",
     "prepare": "husky"
   },
+  "engines": {
+    "node": ">=22"
+  },
   "lint-staged": {
     "*.{js,ts,tsx}": [
       "eslint --fix"
