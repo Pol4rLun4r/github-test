@@ -1,3 +1,10 @@
+## [1.2.2](https://github.com/Pol4rLun4r/github-test/compare/v1.2.1...v1.2.2) (2026-05-24)
+
+
+### Bug Fixes
+
+* corrigido cor do app para yellow ([4c330a1](https://github.com/Pol4rLun4r/github-test/commit/4c330a17f13342e71a882d0ec85e08320af63479))
+
 ## [1.2.1](https://github.com/Pol4rLun4r/github-test/compare/v1.2.0...v1.2.1) (2026-05-24)
 
 
