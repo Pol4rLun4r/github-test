@@ -1,3 +1,10 @@
+## [1.2.1](https://github.com/Pol4rLun4r/github-test/compare/v1.2.0...v1.2.1) (2026-05-24)
+
+
+### Bug Fixes
+
+* corrigido cor do app ([f122391](https://github.com/Pol4rLun4r/github-test/commit/f122391c0d8f8f785ca5559bf08b043c92c885da))
+
 # [1.2.0](https://github.com/Pol4rLun4r/github-test/compare/v1.1.2...v1.2.0) (2026-05-24)
 
 
