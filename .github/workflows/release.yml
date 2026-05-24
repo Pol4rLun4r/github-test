@@ -23,6 +23,8 @@ jobs:
 
       # 1. calcula versões
       - run: npx changeset version
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       # 2. build (opcional mas recomendado)
       - run: npm run build
