@@ -1,3 +1,10 @@
+## [1.2.11](https://github.com/Pol4rLun4r/github-test/compare/v1.2.10...v1.2.11) (2026-05-30)
+
+
+### Bug Fixes
+
+* build release fix agora vai ([fd96635](https://github.com/Pol4rLun4r/github-test/commit/fd966350a9e3b785093a85f84919720061c73a51))
+
 ## [1.2.10](https://github.com/Pol4rLun4r/github-test/compare/v1.2.9...v1.2.10) (2026-05-30)
 
 
