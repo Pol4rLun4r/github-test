@@ -1,3 +1,10 @@
+## [1.2.8](https://github.com/Pol4rLun4r/github-test/compare/v1.2.7...v1.2.8) (2026-05-30)
+
+
+### Bug Fixes
+
+* build release fix VAI? ([66c32b2](https://github.com/Pol4rLun4r/github-test/commit/66c32b24cf8fa62f60eb6337ccdbe85574a4dbe6))
+
 ## [1.2.7](https://github.com/Pol4rLun4r/github-test/compare/v1.2.6...v1.2.7) (2026-05-30)
 
 
