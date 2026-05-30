@@ -13,7 +13,7 @@ const ComingSoon = () => {
         <div className={classes.container}>
             <Stack align="center" gap="xs">
                 <IconBarrierBlock size={200} stroke={1.5} />
-                <Title>Coming Soon</Title>
+                <Title>Coming Soonn</Title>
             </Stack>
         </div>
     )
