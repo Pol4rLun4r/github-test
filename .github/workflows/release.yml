@@ -46,8 +46,9 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
         run: |
-          if gh pr list --state merged --base main --head semantic-release \
-            --json mergeCommit --jq '.[] | select(.mergeCommit.oid == "'"$GITHUB_SHA"'") | .number' | grep -q .; then
+          if gh api --paginate \
+            "repos/${GITHUB_REPOSITORY}/commits/${GITHUB_SHA}/pulls" \
+            --jq '.[] | select(.head.ref == "semantic-release" and .merged_at != null) | .number' | grep -q .; then
             echo "skip=true" >> "$GITHUB_OUTPUT"
           else
             echo "skip=false" >> "$GITHUB_OUTPUT"
