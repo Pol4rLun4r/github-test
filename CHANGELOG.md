@@ -1,3 +1,22 @@
+# [2.0.0](https://github.com/Pol4rLun4r/github-test/compare/v1.2.13...v2.0.0) (2026-07-26)
+
+
+### Performance Improvements
+
+* **pencil:** agora vai ([21ba7f1](https://github.com/Pol4rLun4r/github-test/commit/21ba7f1608dc1ad9fab9ccef646aa10883ea41a4))
+* **pencil:** agora vai IRAAAAAAAAAAA ([ff6c5f4](https://github.com/Pol4rLun4r/github-test/commit/ff6c5f42e6300b830460a0cd16c3cd963fcb9a60))
+* **pencil:** remove graphiteWidth option ([1ae70f6](https://github.com/Pol4rLun4r/github-test/commit/1ae70f62d686596c19870060e493379c561e32fd))
+
+
+### BREAKING CHANGES
+
+* **pencil:** The graphiteWidth option has been removed.
+The default graphite width of 10mm is always used for performance reasons.
+* **pencil:** The graphiteWidth option has been removed.
+The default graphite width of 10mm is always used for performance reasons.
+* **pencil:** The graphiteWidth option has been removed.
+The default graphite width of 10mm is always used for performance reasons.
+
 ## [1.2.13](https://github.com/Pol4rLun4r/github-test/compare/v1.2.12...v1.2.13) (2026-05-30)
 
 
