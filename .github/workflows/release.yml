@@ -69,11 +69,14 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add CHANGELOG.md package.json
-          git commit -m "chore(release): ${{ steps.prepare.outputs.version }}"
+          HUSKY=0 git commit -m "chore(release): ${{ steps.prepare.outputs.version }}"
           git push --force-with-lease origin semantic-release
 
-          if gh pr view --head semantic-release --base main >/dev/null 2>&1; then
-            gh pr edit --title "chore(release): ${{ steps.prepare.outputs.version }}" \
+          PR_NUMBER="$(gh pr list --state open --head semantic-release --base main \
+            --json number --jq '.[0].number')"
+
+          if [ -n "$PR_NUMBER" ]; then
+            gh pr edit "$PR_NUMBER" --title "chore(release): ${{ steps.prepare.outputs.version }}" \
               --body "Esta PR foi gerada pelo semantic-release. Revise o changelog e a versão antes de mesclar; a publicação ocorrerá após o merge."
           else
             gh pr create --head semantic-release --base main \
