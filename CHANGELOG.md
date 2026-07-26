@@ -1,3 +1,14 @@
+# [2.0.0](https://github.com/Pol4rLun4r/github-test/compare/v1.2.13...v2.0.0) (2026-07-26)
+
+
+### Performance Improvements
+
+agora rodando em 4k
+
+### BREAKING CHANGES
+
+Não vou contar
+
 ## [1.2.13](https://github.com/Pol4rLun4r/github-test/compare/v1.2.12...v1.2.13) (2026-05-30)
 
 
