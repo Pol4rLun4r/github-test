@@ -40,7 +40,7 @@ const LeftTitle = () => {
             <Group gap={6} wrap="nowrap">
                 <div>Bear Budgets </div>
                 <Badge size="xs" variant="light" color="gray">
-                    v{__APP_VERSION__} - (v2.2.2 antes do update)
+                    v{__APP_VERSION__}
                 </Badge>
             </Group>
         </Group>
