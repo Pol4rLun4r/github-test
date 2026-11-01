@@ -38,7 +38,7 @@ const LeftTitle = () => {
                 </ActionIcon>
             </Tooltip>
             <Group gap={6} wrap="nowrap">
-                <div>Bear Budgets</div>
+                <div>Bear Budgets tests</div>
                 <Badge size="xs" variant="light" color="gray">
                     v{__APP_VERSION__}
                 </Badge>
