@@ -1,3 +1,10 @@
+# [2.2.0](https://github.com/Pol4rLun4r/github-test/compare/v2.1.0...v2.2.0) (2026-11-01)
+
+
+### Features
+
+* title a2 teste ([cf83056](https://github.com/Pol4rLun4r/github-test/commit/cf830563219a1fe50ca496ece7dd2d368c98e173))
+
 # [2.1.0](https://github.com/Pol4rLun4r/github-test/compare/v2.0.0...v2.1.0) (2026-11-01)
 
 
