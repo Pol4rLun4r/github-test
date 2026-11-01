@@ -1,3 +1,10 @@
+## [2.2.2](https://github.com/Pol4rLun4r/github-test/compare/v2.2.1...v2.2.2) (2026-11-01)
+
+
+### Bug Fixes
+
+* ajuste 2 a3 ([9058f4e](https://github.com/Pol4rLun4r/github-test/commit/9058f4eead9ced55eaf9eb09485182ff6ec24b78))
+
 ## [2.2.1](https://github.com/Pol4rLun4r/github-test/compare/v2.2.0...v2.2.1) (2026-11-01)
 
 
