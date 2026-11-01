@@ -1,3 +1,10 @@
+# [2.1.0](https://github.com/Pol4rLun4r/github-test/compare/v2.0.0...v2.1.0) (2026-11-01)
+
+
+### Features
+
+* a1 ([9a59136](https://github.com/Pol4rLun4r/github-test/commit/9a59136e091be820f8a157b5897099ac22a2c4fc))
+
 # [2.0.0](https://github.com/Pol4rLun4r/github-test/compare/v1.2.13...v2.0.0) (2026-11-01)
 
 
