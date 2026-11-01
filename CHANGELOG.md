@@ -1,3 +1,10 @@
+# [2.3.0](https://github.com/Pol4rLun4r/github-test/compare/v2.2.2...v2.3.0) (2026-11-01)
+
+
+### Features
+
+* new text a22 ([bd5cbe5](https://github.com/Pol4rLun4r/github-test/commit/bd5cbe55a4374c22176c81f0daa145f2163a256e))
+
 ## [2.2.2](https://github.com/Pol4rLun4r/github-test/compare/v2.2.1...v2.2.2) (2026-11-01)
 
 
