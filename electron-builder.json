@@ -13,7 +13,10 @@
     "executableName": "bear-budgets-test"
   },
   "win": {
-    "target": ["nsis"]
+    "target": ["nsis"],
+    "nsis": {
+      "artifactName": "Bear-Budgets-Test-Setup-${version}.${ext}"
+    }
   },
   "publish": {
     "provider": "github",
