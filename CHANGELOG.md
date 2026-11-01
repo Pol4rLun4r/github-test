@@ -1,3 +1,10 @@
+# [2.4.0](https://github.com/Pol4rLun4r/github-test/compare/v2.3.0...v2.4.0) (2026-11-01)
+
+
+### Features
+
+* update desnecessário ([08a42ba](https://github.com/Pol4rLun4r/github-test/commit/08a42bab1eb4fad5dfcfd58c72d60e30b980dd76))
+
 # [2.3.0](https://github.com/Pol4rLun4r/github-test/compare/v2.2.2...v2.3.0) (2026-11-01)
 
 
