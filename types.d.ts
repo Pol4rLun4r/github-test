@@ -78,7 +78,29 @@ type EventPayloadMapping = {
     "window:minimize": void;
     "window:maximizeToggle": void;
     "window:close": void;
+
+    // application updates
+    "update:getState": AppUpdateState;
+    "update:download": void;
+    "update:install": void;
 }
+
+type AppUpdateStatus =
+    | "idle"
+    | "unsupported"
+    | "checking"
+    | "not-available"
+    | "available"
+    | "downloading"
+    | "downloaded"
+    | "error";
+
+type AppUpdateState = {
+    status: AppUpdateStatus;
+    version?: string;
+    percent?: number;
+    error?: string;
+};
 
 // --------------- API ---------------
 type SuccessResponse<T> = {
@@ -118,10 +140,18 @@ interface WindowAPI {
     close(): Promise<void>;
 }
 
+interface AppUpdateAPI {
+    getState(): Promise<AppUpdateState>;
+    onStateChange(callback: (state: AppUpdateState) => void): () => void;
+    download(): Promise<void>;
+    install(): Promise<void>;
+}
+
 interface API {
     quotation: QuotationAPI;
     item: ItemAPI;
     window: WindowAPI;
+    updates: AppUpdateAPI;
 };
 
 interface Window {

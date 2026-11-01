@@ -4,7 +4,7 @@
   "version": "2.0.0",
   "type": "module",
   "main": "dist-electron/main.js",
-  "homepage": "https://github.com/Pol4rLun4r/bear-budgets",
+  "homepage": "https://github.com/Pol4rLun4r/github-test",
   "author": {
     "email": "polaroid@hotmail.com",
     "name": "Polaroid"
@@ -27,8 +27,8 @@
     "preview": "vite preview",
     "transpile:electron": "tsc --project src/electron/tsconfig.json",
     "dist:mac": "npm run transpile:electron && npm run build && electron-builder --mac --arm64",
-    "dist:win": "npm run transpile:electron && npm run build && electron-builder --win --x64",
-    "dist:linux": "npm run transpile:electron && npm run build && electron-builder --linux --x64",
+    "dist:win": "npm run transpile:electron && npm run build && electron-builder --win --x64 --publish never",
+    "dist:linux": "npm run transpile:electron && npm run build && electron-builder --linux --x64 --publish never",
     "test": "cross-env NODE_ENV=test npm rebuild better-sqlite3 && vitest",
     "test:ui": "vitest --ui",
     "test:run": "vitest run",
@@ -49,6 +49,7 @@
     "@tabler/icons-react": "^3.36.1",
     "better-sqlite3": "^12.9.0",
     "dayjs": "^1.11.23",
+    "electron-updater": "^6.8.11",
     "react": "^19.2.5",
     "react-dom": "^19.2.5",
     "react-redux": "^9.2.0"

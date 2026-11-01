@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 // mantine
 import { Tooltip, UnstyledButton } from '@mantine/core';
+import type { ReactNode } from 'react';
 
 // styles
 import classes from '../Sidebar.module.css';
@@ -17,43 +18,52 @@ interface TabsProps {
     label: string;
     active?: boolean;
     onClick?: () => void;
+    tooltip?: ReactNode;
+    iconContent?: ReactNode;
+    disabled?: boolean;
+    highlighted?: boolean;
+    success?: boolean;
     ref?: any
 }
 
-export const SidebarPage = ({ icon: Icon, label, active, onClick, ref }: TabsProps) => {
+export const SidebarPage = ({
+    icon: Icon,
+    label,
+    active,
+    onClick,
+    tooltip,
+    iconContent,
+    disabled,
+    highlighted,
+    success,
+    ref
+}: TabsProps) => {
     const isSidebarCollapsed = useSelector(selectIsSidebarCollapsed);
 
     return (
         <div ref={ref}>
-            {isSidebarCollapsed ? (
-                <Tooltip label={label} position='right' transitionProps={{ duration: 0 }}>
-                    <UnstyledButton
-                        className={classes.tab}
-                        onClick={onClick}
-                        data-active={active || undefined}
-                        data-collapsed={isSidebarCollapsed}
-                        aria-label={label}
-                    >
-                        <div className={classes.iconContainer} data-collapsed={isSidebarCollapsed}>
-                            <Icon size={22} stroke={1.5} className={classes.icon} />
-                        </div>
-                    </UnstyledButton>
-                </Tooltip>
-            ) : (
+            <Tooltip
+                label={tooltip ?? label}
+                disabled={!tooltip && !isSidebarCollapsed}
+                position='right'
+                transitionProps={{ duration: 0 }}
+            >
                 <UnstyledButton
                     className={classes.tab}
-                    onClick={onClick}
+                    onClick={disabled ? undefined : onClick}
                     data-active={active || undefined}
+                    data-highlighted={highlighted || undefined}
+                    data-success={success || undefined}
                     data-collapsed={isSidebarCollapsed}
                     aria-label={label}
+                    aria-disabled={disabled || undefined}
                 >
                     <div className={classes.iconContainer} data-collapsed={isSidebarCollapsed}>
-                        <Icon size={22} stroke={1.5} className={classes.icon} />
+                        {iconContent ?? <Icon size={22} stroke={1.5} className={classes.icon} />}
                     </div>
-                    <span className={classes.label}>{label}</span>
+                    {!isSidebarCollapsed && <span className={classes.label}>{label}</span>}
                 </UnstyledButton>
-            )}
-
+            </Tooltip>
         </div>
     )
 };

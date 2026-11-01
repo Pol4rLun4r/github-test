@@ -8,7 +8,8 @@ import { Stack, useMantineColorScheme, useComputedColorScheme } from '@mantine/c
 import { IconSettings2, IconSun, IconMoon } from '@tabler/icons-react'
 
 // components
-import { SidebarPage } from './SidebarPage'; 
+import { SidebarPage } from './SidebarPage';
+import UpdateOption from './UpdateOption';
 
 const SecondaryOptions = () => {
     const { setColorScheme } = useMantineColorScheme();
@@ -20,6 +21,7 @@ const SecondaryOptions = () => {
 
     return (
         <Stack gap={0} className={classes.secondaryOptions}>
+            <UpdateOption />
             <SidebarPage
                 icon={computedColorScheme === 'light' ? IconMoon : IconSun}
                 label={computedColorScheme === 'light' ? 'Dark mode' : 'Light mode'}

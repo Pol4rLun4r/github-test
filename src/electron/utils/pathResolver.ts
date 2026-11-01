@@ -35,5 +35,5 @@ export const getDBPath = () => {
 
     if(isTestDatabase()) return path.join(app.getPath('documents'), "bear-budgets-test-database.db");
 
-    return path.join(app.getPath('documents'), "bear-budgets.db");
+    return path.join(app.getPath('documents'), "bear-budgets-test.db");
 }

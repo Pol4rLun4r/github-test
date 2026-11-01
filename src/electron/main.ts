@@ -18,6 +18,7 @@ import { createMainWindow, focusOrCreateMainWindow } from "./windows/mainWindow.
 // setups
 import { setupSingleInstance } from "./app/singleInstance.js";
 import { setupAppLifeCycle } from "./app/lifeCycle.js";
+import { setupAutoUpdater } from "./app/updater.js";
 
 // database
 let db: ReturnType<typeof createDatabase> | undefined;
@@ -42,6 +43,7 @@ const main = () => {
         ipcHandlers(db); // registo dos handlers antes de abrir a janela
         windowEvents(focusOrCreateMainWindow); // registo dos eventos da janela
         createMainWindow(); // cria a janela principal do aplicativo
+        setupAutoUpdater(); // verifica atualizações, inclusive durante o desenvolvimento
     })
 }
 

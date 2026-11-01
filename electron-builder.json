@@ -1,6 +1,6 @@
 {
-  "appId": "com.polaroid.bear-budgets",
-  "productName": "Bear Budgets",
+  "appId": "com.polaroid.bear-budgets-test",
+  "productName": "Bear Budgets Test",
   "files": ["dist-electron", "dist-react"],
   "extraResources": ["dist-electron/preload.cjs", "src/assets/**"],
   "icon": "./src/assets/bear-budgets-icon.png",
@@ -10,9 +10,15 @@
   "linux": {
     "target": "deb",
     "category": "Utility",
-    "executableName": "bear-budgets"
+    "executableName": "bear-budgets-test"
   },
   "win": {
-    "target": ["portable", "msi"]
+    "target": ["nsis"]
+  },
+  "publish": {
+    "provider": "github",
+    "owner": "Pol4rLun4r",
+    "repo": "github-test",
+    "releaseType": "release"
   }
 }

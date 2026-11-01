@@ -29,6 +29,16 @@ const api: API = {
         minimize: () => ipcInvoke('window:minimize'),
         maximizeToggle: () => ipcInvoke('window:maximizeToggle'),
         close: () => ipcInvoke('window:close'),
+    },
+    updates: {
+        getState: () => ipcInvoke('update:getState'),
+        onStateChange: (callback) => {
+            const listener = (_event: Electron.IpcRendererEvent, state: AppUpdateState) => callback(state);
+            electron.ipcRenderer.on('update:stateChanged', listener);
+            return () => electron.ipcRenderer.removeListener('update:stateChanged', listener);
+        },
+        download: () => ipcInvoke('update:download'),
+        install: () => ipcInvoke('update:install'),
     }
 }
 

@@ -46,6 +46,23 @@
         color: var(--mantine-primary-color-light-color);
     }
 
+    &[data-highlighted] {
+        color: var(--mantine-primary-color-filled);
+    }
+
+    &[data-success] {
+        color: light-dark(var(--mantine-color-green-7), var(--mantine-color-green-4));
+    }
+
+    &[aria-disabled=true] {
+        cursor: default;
+        opacity: 0.8;
+
+        &:hover {
+            background-color: transparent;
+        }
+    }
+
     &:hover {
         background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-8));
     }

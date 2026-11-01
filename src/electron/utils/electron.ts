@@ -42,7 +42,7 @@ export function validateEventFrame(frame: WebFrameMain) {
 // função para lidar com eventos do ipcMain, garantindo que o evento seja legítimo e passando o banco de dados para a função de manipulação
 export const ipcMainHandle = <Key extends keyof EventPayloadMapping>(
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    channels: Key, handle: (args: any) => EventPayloadMapping[Key]
+    channels: Key, handle: (args: any) => EventPayloadMapping[Key] | Promise<EventPayloadMapping[Key]>
 ) => {
     electron.ipcMain.handle(channels, (event, args) => {
         if (!event.senderFrame) {

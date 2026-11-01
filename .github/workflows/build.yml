@@ -17,6 +17,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.release.tag_name }}
 
       - uses: actions/setup-node@v4
         with:
@@ -26,22 +28,28 @@ jobs:
 
       - name: Build Electron app on Windows
         if: matrix.os == 'windows-2022'
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: npm run dist:win
 
       - name: Build Electron app on Linux
         if: matrix.os == 'ubuntu-24.04'
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: npm run dist:linux
 
-      - name: Upload release assets
+      - name: Upload Windows installer and update metadata
+        if: matrix.os == 'windows-2022'
         uses: softprops/action-gh-release@v2
         with:
           files: |
             dist/*.exe
-            dist/*.AppImage
+            dist/*.blockmap
+            dist/latest.yml
+          fail_on_unmatched_files: true
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload Linux package
+        if: matrix.os == 'ubuntu-24.04'
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
             dist/*.deb
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          fail_on_unmatched_files: true
+          token: ${{ secrets.GITHUB_TOKEN }}
