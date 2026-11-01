@@ -1,5 +1,4 @@
 // database
-
 import type { Database } from "better-sqlite3";
 
 // utils
@@ -8,16 +7,17 @@ import { success, failure } from "../../utils/handleSuccess.js";
 // repositories
 import { createRepositories } from "../../repositories/index.js";
 
-const getAllQuotationsSummaryService = (db: Database) => () => {
+/** pegar resumo de todas as cotações (dados base) */
+const getAllQuotationsSummary = (db: Database) => () => {
     const repo = createRepositories(db);
 
-    const quotations = repo.quotation.getAllSummary();
+    const quotations = repo.quotation.base.getAllSummary();
 
-    if(!quotations) {
-        return failure("Nenhuma cotação encontrada")
+    if (quotations === undefined) {
+        return failure("Erro interno ao buscar cotações");
     }
 
     return success(quotations);
-};
+}
 
-export default getAllQuotationsSummaryService;
+export default getAllQuotationsSummary;

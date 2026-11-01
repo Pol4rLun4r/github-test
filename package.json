@@ -1,29 +1,29 @@
 {
-  "name": "bear-budgets",
+  "name": "tests",
   "private": true,
-  "version": "2.0.0",
+  "version": "4.2.0",
   "type": "module",
   "main": "dist-electron/main.js",
-  "homepage": "https://github.com/Pol4rLun4r",
+  "homepage": "https://github.com/Pol4rLun4r/bear-budgets",
   "author": {
     "email": "polaroid@hotmail.com",
     "name": "Polaroid"
-  },
-  "engines": {
-    "node": ">=22"
   },
   "lint-staged": {
     "*.{js,ts,tsx}": [
       "eslint --fix"
     ]
   },
+  "engines": {
+    "node": ">=22"
+  },
   "scripts": {
-    "dev": "cross-env NODE_ENV=development npx @electron/rebuild -f -w better-sqlite3 && npm-run-all --parallel dev:react dev:electron",
+    "dev": "npm run rebuild:electron && cross-env NODE_ENV=development npm-run-all --parallel dev:react dev:electron",
     "dev:react": "vite",
-    "dev:electron": "npm run transpile:electron && cross-env NODE_ENV=development electron .",
+    "dev:electron": "npm run transpile:electron && electron .",
+    "dev:test-database": "npm run rebuild:electron && cross-env NODE_ENV=database npm-run-all --parallel dev:react dev:electron",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "prepare": "husky",
     "preview": "vite preview",
     "transpile:electron": "tsc --project src/electron/tsconfig.json",
     "dist:mac": "npm run transpile:electron && npm run build && electron-builder --mac --arm64",
@@ -34,27 +34,28 @@
     "test:run": "vitest run",
     "postinstall": "npx @electron/rebuild",
     "rebuild:node": "npm rebuild better-sqlite3",
-    "rebuild:electron": "electron-rebuild -f -w better-sqlite3"
+    "rebuild:electron": "electron-rebuild -f -w better-sqlite3",
+    "prepare": "husky"
   },
   "dependencies": {
     "@blackglory/better-sqlite3-migrations": "^0.2.2",
     "@dnd-kit/react": "^0.3.2",
-    "@mantine/core": "^8.3.18",
-    "@mantine/form": "^8.3.18",
-    "@mantine/hooks": "^8.3.18",
-    "@mantine/notifications": "^8.3.18",
+    "@mantine/core": "^9.7.2",
+    "@mantine/dates": "^9.7.2",
+    "@mantine/form": "^9.7.2",
+    "@mantine/hooks": "^9.7.2",
+    "@mantine/notifications": "^9.7.2",
     "@reduxjs/toolkit": "^2.11.2",
     "@tabler/icons-react": "^3.36.1",
-    "@tanstack/react-query": "^5.100.10",
     "better-sqlite3": "^12.9.0",
-    "framer-motion": "^12.34.0",
+    "dayjs": "^1.11.23",
     "react": "^19.2.5",
     "react-dom": "^19.2.5",
     "react-redux": "^9.2.0"
   },
   "devDependencies": {
-    "@commitlint/cli": "^21.0.1",
-    "@commitlint/config-conventional": "^21.0.1",
+    "@commitlint/cli": "^21.0.2",
+    "@commitlint/config-conventional": "^21.0.2",
     "@electron/rebuild": "^4.0.4",
     "@eslint/js": "^10.0.1",
     "@playwright/test": "^1.59.1",

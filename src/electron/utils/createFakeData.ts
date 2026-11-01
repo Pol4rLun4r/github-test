@@ -4,8 +4,40 @@ import type { Database } from "better-sqlite3";
 import { isDev } from "./env.js"
 import { createRepositories } from "../repositories/index.js";
 import { fakeItens } from "../test/fakeItens.js";
-import { fakeClients } from "../test/fakeClients.js";
 import { createServices } from "../services/index.js";
+
+const createRandomQuotationPayload = (itemReferences: ItemReference[]): CreateQuotation => {
+    const itemCount = Math.floor(Math.random() * 5) + 1;
+
+    const items = Array.from({ length: itemCount }, (_, position) => {
+        const itemReference = itemReferences[Math.floor(Math.random() * itemReferences.length)];
+        const quantity = Math.floor(Math.random() * 5) + 1;
+        const unitPrice = Number((Math.random() * 100 + 1).toFixed(2));
+
+        return {
+            item_reference: { ...itemReference },
+            item_values: {
+                quantity,
+                unit_price: unitPrice,
+                position
+            },
+            reference_links: []
+        };
+    });
+
+    const totalValue = Number(
+        items.reduce((sum, item) => sum + item.item_values.quantity * item.item_values.unit_price, 0).toFixed(2)
+    );
+
+    return {
+        items,
+        quotation: {
+            amount: items.length,
+            total_value: totalValue,
+            notes: `Orçamento aleatório ${Math.floor(Math.random() * 1000)}`
+        }
+    };
+};
 
 export const createFakeData = (db: Database) => {
     if (!isDev()) return;
@@ -19,48 +51,21 @@ export const createFakeData = (db: Database) => {
     ];
 
     // Cria itens falsos
-    fakeItens.forEach((item) => {
-        const itemReferenceId = repo.item.createReference(item);
+    const itemReferences = fakeItens.map((item) => {
+        const itemReferenceId = repo.item.reference.create(item);
         fakeReferenceLinks.forEach((link) => {
-            repo.item.createReferenceLink(itemReferenceId, {...link, item_reference_id: itemReferenceId});
+            repo.item.referenceLinks.create(itemReferenceId, { ...link, item_reference_id: itemReferenceId });
         });
+
+        return { ...item, id: itemReferenceId };
     });
-
-    // Cria clientes falsos
-    fakeClients.forEach(client => {
-        repo.client.create(client);
-    });
-
-
-    const payloadQuotation: CreateWithAllData = {
-        client: { ...fakeClients[0] },
-        items: [
-            {
-                item_reference: { ...fakeItens[0] },
-                reference_links: [],
-                item_version: {
-                    quantity: 2,
-                    unit_price: 2,
-                    position: 0
-                }
-            },
-            {
-                item_reference: { ...fakeItens[0] },
-                reference_links: [
-                    { content: 'https://mantine.dev/llms/getting-started.md' }
-                ],
-                item_version: {
-                    quantity: 2,
-                    unit_price: 2,
-                    position: 1
-                }
-            }
-        ],
-        quotation: { amount: 12, total_value: 431.32, status: 1, notes: "Hello World" }
-    }
 
     // Cria falsos orçamentos
     for (let index = 0; index < 50; index++) {
-        services.quotation.createWithItems(payloadQuotation);
+        const result = services.quotation.create(createRandomQuotationPayload(itemReferences));
+
+        if (!result.success) {
+            throw new Error(`Falha ao criar orçamento falso: ${result.data}`);
+        }
     }
 }

@@ -1,127 +1,48 @@
-import { app, BrowserWindow, shell } from "electron";
+// electron
+import { app } from "electron";
 
 // utils
-import { isDev } from "./utils/env.js";
-import { getPreloadPath, getDBPath, getUIPath } from "./utils/pathResolver.js";
+import { getDBPath } from "./utils/pathResolver.js";
 import { createFakeData } from "./utils/createFakeData.js";
 
 // database
 import { createDatabase } from "./db/connection.js";
 
-// componentes
+// electron components
 import ipcHandlers from "./ipc/index.js";
-import appEvents from "./appEvents.js";
 
-// criar janela principal
-const createMainWindow = () => {
-    const win = new BrowserWindow({
-        webPreferences: {
-            nodeIntegration: false, // desativa a integração do Node.js para segurança
-            sandbox: true, // necessário para contextBridge funcionar corretamente
-            preload: getPreloadPath(), // caminho para o arquivo preload, que é responsável por expor as APIs do Electron para o renderer process de forma segura
-            devTools: isDev() ? true : false,
-        },
-        width: 1200,
-        height: 800,
-        minWidth: 750,
-        minHeight: 650,
-        frame: false
-        
-    });
+// windows
+import { windowEvents } from "./app/windowEvents.js";
+import { createMainWindow, focusOrCreateMainWindow } from "./windows/mainWindow.js";
 
-    const openExternalIfNeeded = (url: string) => {
-        // Deixa o app navegar normalmente em recursos internos
-        if (url.startsWith("file:")) return false;
-        if (isDev() && url.startsWith("http://localhost:5173/")) return false;
+// setups
+import { setupSingleInstance } from "./app/singleInstance.js";
+import { setupAppLifeCycle } from "./app/lifeCycle.js";
 
-        // Abre links externos no navegador padrão
-        if (url.startsWith("http:") || url.startsWith("https:") || url.startsWith("mailto:")) {
-            void shell.openExternal(url);
-            return true;
-        }
-
-        return false;
-    };
-
-    // Impede que target="_blank" crie uma "aba/janela" dentro do Electron
-    win.webContents.setWindowOpenHandler(({ url }) => {
-        if (openExternalIfNeeded(url)) return { action: "deny" };
-        return { action: "allow" };
-    });
-
-    // Impede navegação da janela principal para fora do app
-    win.webContents.on("will-navigate", (event, url) => {
-        if (openExternalIfNeeded(url)) {
-            event.preventDefault();
-        }
-    });
-
-    if (isDev()) {
-        win.loadURL('http://localhost:5173/'); // caminho em desenvolvimento
-    } else {
-        // sempre o mesmo path que uso no validateEventFrame do IPC — evita inconsistência prod vs validação
-        win.loadFile(getUIPath());
-    }
-};
-
-// banco pode ainda não existir antes do whenReady / before-quit raro falhar no arranque
+// database
 let db: ReturnType<typeof createDatabase> | undefined;
 
-process.on('uncaughtException', console.error);
-process.on('unhandledRejection', console.error);
-
-// função para focar ou criar a janela principal
-const focusOrCreateMainWindow = () => {
-    const wins = BrowserWindow.getAllWindows();
-    if (wins.length === 0) {
-        createMainWindow();
-        return;
-    }
-
-    // foca ou cria a janela principal
-    for (const win of wins) {
-        if (win.isMinimized()) win.restore();
-        win.show();
-        win.focus();
-    }
-};
-
-
 const main = () => {
-    // verifica se o programa já está sendo executado em outra instância
-    const gotLock = app.requestSingleInstanceLock();
-    if (!gotLock) {
-        app.quit();
+    // configura o ciclo de vida do aplicativo, garantindo que o banco de dados seja fechado corretamente e capturando erros não tratados
+    setupAppLifeCycle(() => db);
+
+    // garante que só uma instancia do app roda, se o usuário tentar abrir outra, a janela da instância existente é focada
+    if (!setupSingleInstance(focusOrCreateMainWindow)) {
         return;
     }
-    // se o programa já está sendo executado em outra instância, foca ou cria a janela principal
-    app.on("second-instance", () => focusOrCreateMainWindow());
 
-    // fecha explicitamente pra soltar locks do sqlite (principalmente Win/Linux); sem isso ficava processo zombie e single-instance partia aos trambolhões
-    app.on("before-quit", () => {
-        try {
-            db?.close();
-        } catch {
-            //
-        }
-    });
+    // quando o app estiver pronto, cria a janela principal, inicializa o banco de dados e registra os handlers do IPC
+    app.whenReady().then(() => {
+        db = createDatabase(getDBPath()); // cria a conexão com o banco de dados
 
-    try {
-        app.whenReady().then(() => {
-            db = createDatabase(getDBPath());
+        // função para dev
+        createFakeData(db); // cria dados fake em modo de desenvolvimento
 
-            // cria dados fake para desenvolvimento
-            createFakeData(db);
-
-            // registo dos handlers antes de abrir a janela — assim nenhum invoke dispara “meio a meio” sem listener
-            ipcHandlers(db);
-            appEvents(focusOrCreateMainWindow);
-            createMainWindow();
-        })
-    } catch (error) {
-        console.error(error);
-        app.quit();
-    }
+        // funções principais do app
+        ipcHandlers(db); // registo dos handlers antes de abrir a janela
+        windowEvents(focusOrCreateMainWindow); // registo dos eventos da janela
+        createMainWindow(); // cria a janela principal do aplicativo
+    })
 }
 
 main();

@@ -1,5 +1,10 @@
 {
   "compilerOptions": {
+    "paths": {
+      "@/*": [
+        "./src/ui/*"
+      ]
+    },
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
     "target": "es2023",
     "lib": [
@@ -27,8 +32,9 @@
     "noFallthroughCasesInSwitch": true
   },
   "include": [
-    "src"
-, "types"  ],
+    "src",
+    "types"
+  ],
   "exclude": [
     "src/electron"
   ]

@@ -2,9 +2,9 @@ import path from "path";
 import { app } from "electron";
 
 // utils
-import { isDev, isTest } from "./env.js";
+import { isDev, isTest, isTestDatabase } from "./env.js";
 
-// em build o electron-builder mete o preload em extraResources → fica em resources/; confio no isPackaged em vez de adivinhar ../ a partir do asar
+/** função para obter o caminho do arquivo de preload */
 export const getPreloadPath = () => {
     const name = path.join("dist-electron", "preload.cjs");
     const resolved = app.isPackaged
@@ -13,24 +13,27 @@ export const getPreloadPath = () => {
     return path.normalize(resolved);
 };
 
-// path canónico do index do React — tem de bater certo com o que o WebFrame reporta no IPC
+/** função para obter o caminho do arquivo de UI */
 export function getUIPath() {
     return path.normalize(
         path.resolve(app.getAppPath(), "dist-react", "index.html"),
     );
 }
 
-// normalizei com resolve pra não me lixar com join() e barras à frente tipo /dist-react
+/** função para obter o caminho dos assets */
 export function getAssetPath() {
     return path.normalize(
         path.resolve(app.getAppPath(), isDev() ? "." : "..", "src", "assets"),
     );
 }
 
+/** função para obter o caminho do banco de dados */
 export const getDBPath = () => {
     if (isDev()) return ":memory:"
 
     if (isTest()) return ":memory:"
+
+    if(isTestDatabase()) return path.join(app.getPath('documents'), "bear-budgets-test-database.db");
 
     return path.join(app.getPath('documents'), "bear-budgets.db");
 }

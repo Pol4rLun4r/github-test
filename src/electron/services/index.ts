@@ -1,41 +1,37 @@
 import type { Database } from "better-sqlite3";
 
-// client
-import createClientService from "./client/createClient.service.js";
-import searchClientsService from "./client/searchClients.service.js";
-
 // quotation
 import createQuotationService from "./quotation/createQuotation.service.js";
-import createQuotationWithItemsService from "./quotation/createQuotationWithItems.service.js";
 import getAllQuotationsSummaryService from "./quotation/getAllQuotationsSummary.service.js";
-import getQuotationFullDetailService from "./quotation/getQuotationFullDetail.service.js";
+import getQuotationFullService from "./quotation/getQuotationFull.service.js";
+import getQuotationByItemValuesIdService from "./quotation/getQuotationByItemValuesId.service.js";
 
 // item
-import searchItemDescriptionService from "./item/searchItemDescription.service.js";
-import createItemNoteService from "./item/createItemNote.service.js";
-import getItemNotesService from "./item/getItemNotes.service.js";
+import searchDescriptionService from "./item/searchDescription.service.js";
+import findItemReferences from "./item/findItemReferences.service.js";
 import getReferenceLinksService from "./item/getReferenceLinks.service.js";
-import getAllItemReferenceBySearchService from "./item/getAllItemReferenceBySearch.service.js";
-import getAllItemVersionReferenceIdService from './item/getAllItemVersionByReferenceId.service.js';
+import getAllItemValuesByReferenceIdService from "./item/getAllItemValuesByReferenceId.service.js";
+import getItemValuesByIdService from "./item/getItemValuesById.service.js";
+import getItemDetailsByReferenceIdService from "./item/getItemDetailsByReferenceId.service.js";
+import updateItemReferenceService from "./item/updateItemReference.service.js";
+import updateQuotation from "./quotation/updateQuotation.service.js";
 
 export const createServices = (db: Database) => ({
-    client: {
-        create: createClientService(db),
-        search: searchClientsService(db)
-    },
     quotation: {
         create: createQuotationService(db),
-        createWithItems: createQuotationWithItemsService(db),
         getAllSummary: getAllQuotationsSummaryService(db),
-        getFullDetail: getQuotationFullDetailService(db),
+        getFull: getQuotationFullService(db),
+        getByItemValuesId: getQuotationByItemValuesIdService(db),
+        update: updateQuotation(db)
     },
     item: {
-        getNotes: getItemNotesService(db),
+        searchDescription: searchDescriptionService(db),
+        findItemReferences: findItemReferences(db),
         getReferenceLinks: getReferenceLinksService(db),
-        createNote: createItemNoteService(db),
-        searchDescription: searchItemDescriptionService(db),
-        getAllBySearch: getAllItemReferenceBySearchService(db),
-        getAllVersionByReferenceId: getAllItemVersionReferenceIdService(db)
+        getAllItemValuesByReferenceId: getAllItemValuesByReferenceIdService(db),
+        getItemValuesById: getItemValuesByIdService(db),
+        getItemDetailsByReferenceId: getItemDetailsByReferenceIdService(db),
+        updateItemReference: updateItemReferenceService(db),
     }
 })
 

@@ -9,23 +9,21 @@ export const ipcInvoke = <Key extends keyof EventPayloadMapping>(
 
 // funções que o react irá chamar
 const api: API = {
-    client: {
-        create: (client) => ipcInvoke('client:create', client),
-        search: (query) => ipcInvoke('client:search', query)
-    },
     quotation: {
         create: (quotation) => ipcInvoke('quotation:create', quotation),
-        createWithItems: (allData) => ipcInvoke('quotation:createWithItems', allData),
         getAllSummary: () => ipcInvoke('quotation:getAllSummary'),
-        getFullDetail: (quotationId: Quotation['id']) => ipcInvoke('quotation:getFullDetail', quotationId),
+        getFull: (quotationId: Quotation['id']) => ipcInvoke('quotation:getFull', quotationId),
+        getByItemValuesId: (itemValuesId: ItemValues["id"]) => ipcInvoke('quotation:getByItemValuesId', itemValuesId),
+        update: (quotation) => ipcInvoke('quotation:update', quotation),
     },
     item: {
         searchDescription: (description) => ipcInvoke('item:searchDescription', description),
-        createNote: (note) => ipcInvoke('item:createNote', note),
-        getNotes: (itemReferenceId) => ipcInvoke('item:getNotes', itemReferenceId),
+        findItemReferences: (description) => ipcInvoke('item:findItemReferences', description),
         getReferenceLinks: (itemReferenceId) => ipcInvoke('item:getReferenceLinks', itemReferenceId),
-        getAllBySearch: (description) => ipcInvoke('item:getAllBySearch', description),
-        getAllVersionByReferenceId: (itemReferenceId) => ipcInvoke('item:getAllVersionByReferenceId', itemReferenceId)
+        getAllValuesByReferenceId: (itemReferenceId) => ipcInvoke('item:getAllValuesByReferenceId', itemReferenceId),
+        getValuesById: (itemValuesId) => ipcInvoke('item:getValuesById', itemValuesId),
+        getDetailsByReferenceId: (itemReferenceId) => ipcInvoke('item:getDetailsByReferenceId', itemReferenceId),
+        updateReference: (payload) => ipcInvoke('item:updateReference', payload),
      },
     window: {
         minimize: () => ipcInvoke('window:minimize'),

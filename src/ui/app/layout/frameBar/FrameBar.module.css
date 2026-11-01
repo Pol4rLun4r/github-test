@@ -1,0 +1,62 @@
+.frameBar {
+    /* tamanho do frame */
+    width: 100vw;
+    height: 2.5rem;
+
+    /* organização do frame */
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    user-select: none;
+
+    /* borda */
+    border-bottom: 1px solid light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-4));
+    background-color: var(--mantine-color-body);
+    
+    /* posição do framer bar */
+    position: fixed;
+    z-index: var(--mantine-z-index-max);
+    top: 0;
+    
+    /* permite mover a janela */
+    -webkit-app-region: drag;
+}
+
+.centerTitle {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.buttons {
+    -webkit-app-region: no-drag;
+
+    &:hover {
+        background-color: var(--mantine-primary-color-light-hover);
+    }
+}
+
+.noDrag {
+    -webkit-app-region: no-drag;
+}
+
+.snowflake {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: spin 500ms ease-in-out;
+
+    color: light-dark(var(--mantine-color-black), var(--mantine-color-white));
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .snowflake {
+        animation-duration: 1ms;
+    }
+}

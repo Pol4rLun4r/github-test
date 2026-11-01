@@ -1,0 +1,43 @@
+.container {
+    width: 100%;
+    height: calc(100% - var(--mantine-spacing-md));
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+}
+
+.items {
+    width: 100%;
+    flex: 1;
+    min-height: 0;
+    overflow: hidden;
+
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+
+    background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-8));
+}
+
+.header {
+    width: 100%;
+    flex-shrink: 0;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    background-color: inherit;
+}
+
+.content {
+    flex: 1;
+    width: 100%;
+    min-height: 0;
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    border-top: solid 1px var(--mantine-color-default-border);
+}

@@ -11,11 +11,12 @@ const itemHandlers = (db: Database) => {
     const services = createServices(db);
 
     ipcMainHandle('item:searchDescription', services.item.searchDescription);
-    ipcMainHandle('item:getNotes', services.item.getNotes);
+    ipcMainHandle('item:findItemReferences', services.item.findItemReferences);
+    ipcMainHandle('item:getAllValuesByReferenceId', services.item.getAllItemValuesByReferenceId);
+    ipcMainHandle('item:getValuesById', services.item.getItemValuesById);
     ipcMainHandle('item:getReferenceLinks', services.item.getReferenceLinks);
-    ipcMainHandle('item:createNote', services.item.createNote);
-    ipcMainHandle('item:getAllBySearch', services.item.getAllBySearch);
-    ipcMainHandle('item:getAllVersionByReferenceId', services.item.getAllVersionByReferenceId);
-}
+    ipcMainHandle('item:getDetailsByReferenceId', services.item.getItemDetailsByReferenceId);
+    ipcMainHandle('item:updateReference', services.item.updateItemReference);
+};
 
 export default itemHandlers;

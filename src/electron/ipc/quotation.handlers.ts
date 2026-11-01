@@ -11,9 +11,10 @@ const quotationHandlers = (db: Database) => {
     const services = createServices(db);
 
     ipcMainHandle('quotation:create', services.quotation.create);
-    ipcMainHandle('quotation:createWithItems', services.quotation.createWithItems);
     ipcMainHandle('quotation:getAllSummary', services.quotation.getAllSummary);
-    ipcMainHandle('quotation:getFullDetail', services.quotation.getFullDetail);
+    ipcMainHandle('quotation:getFull', services.quotation.getFull);
+    ipcMainHandle('quotation:getByItemValuesId', services.quotation.getByItemValuesId);
+    ipcMainHandle('quotation:update', services.quotation.update);
 }
 
 export default quotationHandlers;

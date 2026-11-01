@@ -1,67 +1,34 @@
 import type { Database } from "better-sqlite3";
 
-import {
-    createClientRepository,
-    getClientByIdRepository,
-    getClientByDocumentRepository,
-    searchClientsByDocumentRepository,
-    searchClientsByNameRepository,
-    deleteAllClientsRepository,
-} from "./client.repository.js";
+// item
+import itemReferenceRepository from "./itemReference.repository.js";
+import itemValuesRepository from "./itemValues.repository.js";
+import referenceLinksRepository from "./referenceLinks.repository.js";
 
-import {
-    createQuotationRepository,
-    getAllQuotationsRepository,
-    getQuotationByIdRepository,
-    getQuotationVersionByIdRepository,
-    getAllQuotationsSummaryRepository,
-    getQuotationFullDetailRepository,
-} from "./quotation.repository.js";
+// quotation
+import quotationRepository from "./quotation.repository.js";
+import quotationLinksRepository from "./quotationLinks.repository.js";
 
-import {
-    addItemsToQuotationVersionRepository,
-    createItemReferenceRepository,
-    getItemReferenceByIdRepository,
-    getReferenceLinksByReferenceIdRepository,
-    getItemVersionByIdRepository,
-    searchItemReferencesByDescriptionRepository,
-    deleteAllItemReferencesRepository,
-    createReferenceLinkRepository,
-    updateItemReferenceNotesRepository,
-    getAllItemReferencesRepository,
-    getAllItemVersionByIdRepository
-} from "./item.repository.js";
+// workflows
+import addItemToQuotationRepository from "./workFlows/addToQuotation.repository.js";
+import getQuotationFullRepository from "./workFlows/getFullQuotation.repository.js";
+import updateItemReferenceRepository from "./workFlows/updateItemReference.repository.js";
 
 export const createRepositories = (db: Database) => ({
-    client: {
-        create: createClientRepository(db),
-        getById: getClientByIdRepository(db),
-        getByDocument: getClientByDocumentRepository(db),
-        searchByDocument: searchClientsByDocumentRepository(db),
-        searchByName: searchClientsByNameRepository(db),
-        deleteAll: deleteAllClientsRepository(db)
-    },
     quotation: {
-        create: createQuotationRepository(db),
-        getAll: getAllQuotationsRepository(db),
-        getById: getQuotationByIdRepository(db),
-        getByVersionId: getQuotationVersionByIdRepository(db),
-        getAllSummary: getAllQuotationsSummaryRepository(db),
-        getFullDetail: getQuotationFullDetailRepository(db),
+        base: quotationRepository(db),
+        links: quotationLinksRepository(db),
     },
     item: {
-        createReferenceLink: createReferenceLinkRepository(db),
-        createReference: createItemReferenceRepository(db),
-        addToQuotation: addItemsToQuotationVersionRepository(db),
-        getReferenceById: getItemReferenceByIdRepository(db),
-        getVersionById: getItemVersionByIdRepository(db),
-        getReferenceLinksByReferenceId: getReferenceLinksByReferenceIdRepository(db),
-        getAllVersionByReferenceId: getAllItemVersionByIdRepository(db),
-        searchByDescription: searchItemReferencesByDescriptionRepository(db),
-        deleteAllReferences: deleteAllItemReferencesRepository(db),
-        updateReferenceNotes: updateItemReferenceNotesRepository(db),
-        getAllItemReferences: getAllItemReferencesRepository(db)
+        reference: itemReferenceRepository(db),
+        values: itemValuesRepository(db),
+        referenceLinks: referenceLinksRepository(db),
     },
+    workFlows: {
+        addItemToQuotation: addItemToQuotationRepository(db),
+        getQuotationFull: getQuotationFullRepository(db),
+        updateItemReference: updateItemReferenceRepository(db),
+    }
 });
 
 export type Repositories = ReturnType<typeof createRepositories>;

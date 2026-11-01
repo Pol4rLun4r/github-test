@@ -5,44 +5,80 @@ import { createDatabase } from "../../../db/connection.js";
 import { createRepositories } from "../../../repositories/index.js";
 import { createServices } from "../../../services/index.js";
 
+// rules
+import { rulesCode } from "../../../rules/item/getReferenceLinks.js";
+
 // utils
 import { getDBPath } from "../../../utils/pathResolver.js";
 
-describe("Get reference links", () => {
+describe("Pegar links de referencias", () => {
     const db = createDatabase(getDBPath());
     const services = createServices(db);
     const repo = createRepositories(db);
 
-    const itemReference: ItemReference = { description: "Monster" };
-    const itemReferenceId = repo.item.createReference(itemReference);
+    const createReferenceWithLinks = (contents: string[]) => {
+        const response = services.quotation.create({
+            quotation: { amount: 1, total_value: 1 },
+            items: [
+                {
+                    item_reference: { description: "Referência com links" },
+                    reference_links: contents.map((content) => ({ content })),
+                    item_values: { position: 0, quantity: 1 },
+                },
+            ],
+        });
 
-    const referenceLinks: ReferenceLink[] = [
-        {
-            item_reference_id: itemReferenceId,
-            content: "material contra explosão",
-        },
-        {
-            item_reference_id: itemReferenceId,
-            content: "https://aluminium.wetzel.com.br/produtos/",
-        },
-    ];
+        if (!response.success) {
+            throw new Error("Falha ao criar referência para o teste: " + response.data);
+        }
 
-    referenceLinks.forEach((link) => {
-        repo.item.createReferenceLink(link.item_reference_id, { ...link });
+        return response.data[0].item_reference_id;
+    };
+
+    it("retorna todos os links associados à referência", () => {
+        const contents = [
+            "material contra explosão",
+            "https://aluminium.wetzel.com.br/produtos/",
+        ];
+        const itemReferenceId = createReferenceWithLinks(contents);
+
+        const response = services.item.getReferenceLinks(itemReferenceId);
+
+        if (!response.success) {
+            throw new Error("Falha ao pegar links: " + response.data);
+        }
+
+        expect(response.data).toHaveLength(contents.length);
+        expect(response.data).toMatchObject(
+            contents.map((content) => ({ item_reference_id: itemReferenceId, content })),
+        );
     });
 
-    it("ter sucesso ao pegar os links de referência do item", () => {
-        const res = services.item.getReferenceLinks(itemReferenceId);
+    it("retorna uma coleção vazia para uma referência existente sem links", () => {
+        const itemReferenceId = repo.item.reference.create({ description: "Referência sem links" });
 
-        if (!res.success) throw new Error("Falha ao pegar links: " + res.data);
+        const response = services.item.getReferenceLinks(itemReferenceId);
 
-        expect(res.data).toMatchObject(referenceLinks);
+        expect(response).toEqual({ success: true, data: [] });
     });
 
-    it("falhar ao pegar os links de um item de referência que não existe", () => {
-        const res = services.item.getReferenceLinks(9999);
+    it("falha quando o identificador da referência não é informado", () => {
+        const response = services.item.getReferenceLinks(undefined as unknown as GetReferenceLinks);
 
-        expect(res.success).toBe(false);
-        expect(res.data).toBe("ID da referência do item não existe");
+        expect(response).toEqual({
+            success: false,
+            data: rulesCode.ITEM_REFERENCE_ID_NOT_INFORMED,
+        });
+    });
+
+    it("falha quando a referência informada não existe", () => {
+        const itemReferenceId = 999_999;
+
+        const response = services.item.getReferenceLinks(itemReferenceId);
+
+        expect(response).toEqual({
+            success: false,
+            data: rulesCode.ITEM_REFERENCE_NOT_FOUND(itemReferenceId),
+        });
     });
 });

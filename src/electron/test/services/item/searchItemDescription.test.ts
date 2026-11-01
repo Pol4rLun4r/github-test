@@ -9,7 +9,10 @@ import { createServices } from "../../../services/index.js";
 import { getDBPath } from "../../../utils/pathResolver.js";
 import { fakeItens } from "../../fakeItens.js";
 
-describe("Search Item Description", () => {
+// rules
+import { rulesCode } from "../../../rules/item/searchDescription.js";
+
+describe("Pesquisar descrição de itens", () => {
     // criar banco de dados antes dos testes
     const db = createDatabase(getDBPath());
     const services = createServices(db);
@@ -17,9 +20,9 @@ describe("Search Item Description", () => {
 
     beforeAll(() => {
         // cria referências de itens para os testes
-        repo.item.createReference(fakeItens[0]); // cabo
-        repo.item.createReference(fakeItens[1]); // cabo
-        repo.item.createReference(fakeItens[3]); // porca
+        repo.item.reference.create(fakeItens[0]); // cabo
+        repo.item.reference.create(fakeItens[1]); // cabo
+        repo.item.reference.create(fakeItens[3]); // porca
     });
 
     it("ter sucesso quando pesquisar sobre a descrição de um item e ter um retorno com e sem acento", () => {
@@ -63,7 +66,7 @@ describe("Search Item Description", () => {
         const res = services.item.searchDescription(payload);
 
         // 3. verifica se a requisição teve exito
-        expect(res.data).toBe("Nenhum valor informado");
+        expect(res.data).toBe(rulesCode.DESCRIPTION_NOT_INFORMED);
     });
 });
 

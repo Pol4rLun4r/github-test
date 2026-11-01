@@ -1,0 +1,9 @@
+.boarding-select-input {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.boarding-number-input {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
